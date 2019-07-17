@@ -1,0 +1,1 @@
+Those are the original Post-processed mutation trajectory files provided by [Time-resolved metagenomic sequencing of Lenski's long-term evolution experiment with Escherichia coli ](https://github.com/benjaminhgood/LTEE-metagenomic). 
