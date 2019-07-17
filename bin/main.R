@@ -21,45 +21,99 @@ setwd(binDir)
 source(paste0(binDir,"allFunctions.R"))
 
 #create dWTai table
+cat("###########################\n",
+    "Calculating Delta w TAI \n",
+    "###########################\n")
 calcDWTAI(type = "Max",workdir = workdir)
 #create a table with all High and Low mutations
+cat("###########################\n",
+    "Creating table HighLow \n",
+    "###########################\n")
 joinHighLow(workdir = workdir)
 #Create a MutT list
+cat("###########################\n",
+    "Creating MutT mutation list\n",
+    "###########################\n")
+
 mutationsMutT(workdir = workdir)
 
 #Figure 01 ----
 #Number of mutation per population & type
+cat("###########################\n",
+    "Figure 01 \n",
+    "###########################\n")
+
 figFunc01(figName = "Fig01",
           workdir)
 comparePopulations(figName = "Fig01a",
                    save = T,
                    workdir = workdir)
 
-#Figure S02 ----
-#Frequencie of mutations per codon usage A to F
-figFunc02(figName = "FigS02",
-          separeTsTv = T,
-          workdir)
 
-#Figure S03 ----
-#Frequencie of mutations per codon usage after normalization A to F
-figFunc03(figName = "FigS03Count",
-          normBy="count",
-          separeTsTv = T,
-          workdir)
-figFunc03(figName = "FigS03CUB",
-          normBy="CUB",
-          separeTsTv = T,
-          workdir)
-figFunc03(figName = "FigS03Mean",
-          normBy="mean",
-          separeTsTv = T,
-          workdir)
+#Figure 02 ---- 
+# all normalizations
+cat("###########################\n",
+    "Figure 02 \n",
+    "###########################\n")
 
+figFunc05(figName = "Fig02Mean",
+          workdir=workdir,
+          normBy = "mean")
+figFunc05(figName = "Fig02Count",
+          workdir=workdir,
+          normBy = "count")
+figFunc05(figName = "Fig02CUB",
+          workdir=workdir,
+          normBy = "CUB")
+
+#Figure 03 ----
+#depletion Tai
+cat("###########################\n",
+    "Figure 03  \n",
+    "###########################\n")
+
+nada<-plotEnrDeplPVal(type="High",
+                      pval=0.001,
+                      quant=5, 
+                      normalize = T,
+                      normBy = "mean",
+                      rank=200,
+                      fix = T,
+                      TsTv = "all",
+                      title = T,
+                      Dw = "Tai",
+                      top = 86,
+                      save=T,
+                      figName = "Fig03",
+                      workdir = workdir)
+
+#Figure 04 ----
+#depletion Cai
+cat("###########################\n",
+    "Figure 04 \n",
+    "###########################\n")
+
+nada<-plotEnrDeplPVal(type="High",
+                      pval=0.001,
+                      quant=5, 
+                      normalize = T, 
+                      normBy = "mean",
+                      rank=200,
+                      fix = T,
+                      TsTv = "all",
+                      title = T,
+                      Dw = "Cai",
+                      top = 86,
+                      save=T,
+                      figName = "Fig04",
+                      workdir = workdir)
 
 #Figure S01 ----
 #Distribution of Frequencies of mutations per codon usage
 # time line and boxplot for population HighLow
+cat("###########################\n",
+    "Figure S01 \n",
+    "###########################\n")
 timeline(normalize = T,
          population = "HighLow",
          normBy = "mean",
@@ -74,21 +128,43 @@ if (file.exists("FigS01.pdf"))
 file.rename(from = file.path(figDir, "enrichbarHighLow.pdf"), 
             to = file.path(figDir, "FigS01.pdf"))
 
-#Figure 02 ---- 
-# all normalizations
-figFunc05(figName = "Fig02Mean",
-          workdir=workdir,
-          normBy = "mean")
-figFunc05(figName = "Fig02Count",
-          workdir=workdir,
-          normBy = "count")
-figFunc05(figName = "Fig02CUB",
-          workdir=workdir,
-          normBy = "CUB")
+
+#Figure S02 ----
+#Frequencie of mutations per codon usage A to F
+cat("###########################\n",
+    "Figure S02 \n",
+    "###########################\n")
+
+figFunc02(figName = "FigS02",
+          separeTsTv = T,
+          workdir)
+
+#Figure S03 ----
+#Frequencie of mutations per codon usage after normalization A to F
+cat("###########################\n",
+    "Figure S03 \n",
+    "###########################\n")
+figFunc03(figName = "FigS03Count",
+          normBy="count",
+          separeTsTv = T,
+          workdir)
+figFunc03(figName = "FigS03CUB",
+          normBy="CUB",
+          separeTsTv = T,
+          workdir)
+figFunc03(figName = "FigS03Mean",
+          normBy="mean",
+          separeTsTv = T,
+          workdir)
+
 
 #Fig S04/S05 ----
 #Distribution of Frequencies of mutations per codon usage
 # time line and boxplot A to F
+cat("###########################\n",
+    "Figure S04 and S05  \n",
+    "###########################\n")
+
 figFunc04(figName = "FigS04CUB",workdir,type = "line",normBy = "CUB")
 figFunc04(figName = "FigS05CUB",workdir,type = "box",normBy = "CUB")
 
@@ -100,6 +176,10 @@ figFunc04(figName = "FigS05Mean",workdir,type = "box",normBy = "mean")
 
 #Figure S06 ----
 #correlation beteween CAI and TAI
+cat("###########################\n",
+    "Figure S06 \n",
+    "###########################\n")
+
 corrTaiCai(top=86,
            save = T,
            figName = "FigS06",
@@ -107,55 +187,34 @@ corrTaiCai(top=86,
 
 #Figure S07 ----
 #frequency vs dw
+cat("###########################\n",
+    "Figure S07 \n",
+    "###########################\n")
+
 figFunc06(figName = "FigS07",
           Dw = "Cai",
           normBy = "mean",
           workdir = workdir)
 #Figure S08 ----
+cat("###########################\n",
+    "Figure S08 \n",
+    "###########################\n")
+
 figFunc06(figName = "FigS08",
           Dw = "Tai",
           normBy = "mean",
           workdir = workdir)
 
-#Figure 03 ----
-#depletion Tai
-nada<-plotEnrDeplPVal(type="High",
-                pval=0.001,
-                quant=5, 
-                normalize = T,
-                normBy = "mean",
-                rank=200,
-                fix = T,
-                TsTv = "all",
-                title = T,
-                Dw = "Tai",
-                top = 86,
-                save=T,
-                figName = "Fig03",
-                workdir = workdir)
-
-#Figure 04 ----
-#depletion Cai
-nada<-plotEnrDeplPVal(type="High",
-                pval=0.001,
-                quant=5, 
-                normalize = T, 
-                normBy = "mean",
-                rank=200,
-                fix = T,
-                TsTv = "all",
-                title = T,
-                Dw = "Cai",
-                top = 86,
-                save=T,
-                figName = "Fig04",
-                workdir = workdir)
 
 
 
 
 #Figure S09 ----
 #all pvalues of hypergeometric test TAI
+cat("###########################\n",
+    "Figure S09 \n",
+    "###########################\n")
+
 qt1<-plotEnrDeplAll(type="High",
                       pval=0.001,
                       quant=5, 
@@ -173,6 +232,10 @@ qt1<-plotEnrDeplAll(type="High",
 
 #Figure S10 ----
 #all pvalues of hypergeometric test CAI
+cat("###########################\n",
+    "Figure S10 \n",
+    "###########################\n")
+
 qt1<-plotEnrDeplAll(type="High",
                     pval=0.001,
                     quant=5, 
@@ -190,6 +253,10 @@ qt1<-plotEnrDeplAll(type="High",
 
 #Figure S11 ----
 #test all range of Top ranked mutations for CAI
+cat("###########################\n",
+    "Figure S11 \n",
+    "###########################\n")
+
 plotEnrRankRange(type="High",
                  pval=0.001,
                  quant=5, 
@@ -210,6 +277,10 @@ plotEnrRankRange(type="High",
 
 #Figure S12 ----
 #test all range of Top ranked mutations for TAI
+cat("###########################\n",
+    "Figure S12 \n",
+    "###########################\n")
+
 plotEnrRankRange(type="High",
                  pval=0.001,
                  quant=5, 
@@ -230,6 +301,10 @@ plotEnrRankRange(type="High",
 
 #Figure S13 ----
 #test all range of Top ranked mutations for TAI
+cat("###########################\n",
+    "Figure S13 \n",
+    "###########################\n")
+
 plotEnrTopRange(type="High",
                 pval=0.001,
                 quant=5, 
