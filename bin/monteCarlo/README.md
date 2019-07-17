@@ -1,6 +1,6 @@
 ### Monte Carlo symulation
 
-This folder contains the scripts to generate the Monte Carlo symulation to check if the unobserved codons are relevant. 
+This folder contains the scripts to generate the Monte Carlo simulation to check if the unobserved codons are relevant. 
 
 The first step is create de symulated data . It will take a long time.
 > monteCarlo.sh
