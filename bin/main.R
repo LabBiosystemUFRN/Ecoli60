@@ -71,7 +71,7 @@ timeline(normalize = T,
 if (file.exists("FigS01.pdf")) 
   #Delete file if it exists
   file.remove("FigS01.pdf")
-file.rename(from = file.path(figDir, "enrichbarHigh.pdf"), 
+file.rename(from = file.path(figDir, "enrichbarHighLow.pdf"), 
             to = file.path(figDir, "FigS01.pdf"))
 
 #Figure 02 ---- 
