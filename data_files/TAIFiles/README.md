@@ -1,10 +1,10 @@
-Files used by stAIcalc
+This folder contains the files used by stAIcalc
     Sabi2016, stAIcalc: tRNA adaptation index calculator based on species-specific weights
 
-REL606tRNA.txt acquired from http://gtrnadb.ucsc.edu/GtRNAdb2/genomes/bacteria/Esch_coli_B_REL606/Esch_coli_B_REL606-summary.html
+REL606tRNA.txt acquired [here](http://gtrnadb.ucsc.edu/GtRNAdb2/genomes/bacteria/Esch_coli_B_REL606/Esch_coli_B_REL606-summary.html)
      Chan, P.P. & Lowe, T.M. (2016) GtRNAdb 2.0: an expanded database of transfer RNA genes identified in complete and draft genomes.
 
-REL606CdsFasta.txt was generated from gene list 
+REL606CdsFasta.txt was generated from gene list using *createtRNAList.sh*
      
 tRNA AI reference: Reis2004, Solving the riddle of codon usage preferences: a test for translational selection
 
