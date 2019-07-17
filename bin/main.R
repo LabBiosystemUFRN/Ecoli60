@@ -21,17 +21,17 @@ setwd(binDir)
 source(paste0(binDir,"allFunctions.R"))
 
 #create dWTai table
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Calculating Delta w TAI \n",
     "###########################\n")
 calcDWTAI(type = "Max",workdir = workdir)
 #create a table with all High and Low mutations
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Creating table HighLow \n",
     "###########################\n")
 joinHighLow(workdir = workdir)
 #Create a MutT list
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Creating MutT mutation list\n",
     "###########################\n")
 
@@ -39,7 +39,7 @@ mutationsMutT(workdir = workdir)
 
 #Figure 01 ----
 #Number of mutation per population & type
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure 01 \n",
     "###########################\n")
 
@@ -52,7 +52,7 @@ comparePopulations(figName = "Fig01a",
 
 #Figure 02 ---- 
 # all normalizations
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure 02 \n",
     "###########################\n")
 
@@ -68,7 +68,7 @@ figFunc05(figName = "Fig02CUB",
 
 #Figure 03 ----
 #depletion Tai
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure 03  \n",
     "###########################\n")
 
@@ -89,7 +89,7 @@ nada<-plotEnrDeplPVal(type="High",
 
 #Figure 04 ----
 #depletion Cai
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure 04 \n",
     "###########################\n")
 
@@ -111,7 +111,7 @@ nada<-plotEnrDeplPVal(type="High",
 #Figure S01 ----
 #Distribution of Frequencies of mutations per codon usage
 # time line and boxplot for population HighLow
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure S01 \n",
     "###########################\n")
 timeline(normalize = T,
@@ -131,7 +131,7 @@ file.rename(from = file.path(figDir, "enrichbarHighLow.pdf"),
 
 #Figure S02 ----
 #Frequencie of mutations per codon usage A to F
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure S02 \n",
     "###########################\n")
 
@@ -141,7 +141,7 @@ figFunc02(figName = "FigS02",
 
 #Figure S03 ----
 #Frequencie of mutations per codon usage after normalization A to F
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure S03 \n",
     "###########################\n")
 figFunc03(figName = "FigS03Count",
@@ -161,7 +161,7 @@ figFunc03(figName = "FigS03Mean",
 #Fig S04/S05 ----
 #Distribution of Frequencies of mutations per codon usage
 # time line and boxplot A to F
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure S04 and S05  \n",
     "###########################\n")
 
@@ -176,7 +176,7 @@ figFunc04(figName = "FigS05Mean",workdir,type = "box",normBy = "mean")
 
 #Figure S06 ----
 #correlation beteween CAI and TAI
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure S06 \n",
     "###########################\n")
 
@@ -187,7 +187,7 @@ corrTaiCai(top=86,
 
 #Figure S07 ----
 #frequency vs dw
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure S07 \n",
     "###########################\n")
 
@@ -196,7 +196,7 @@ figFunc06(figName = "FigS07",
           normBy = "mean",
           workdir = workdir)
 #Figure S08 ----
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure S08 \n",
     "###########################\n")
 
@@ -211,7 +211,7 @@ figFunc06(figName = "FigS08",
 
 #Figure S09 ----
 #all pvalues of hypergeometric test TAI
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure S09 \n",
     "###########################\n")
 
@@ -232,7 +232,7 @@ qt1<-plotEnrDeplAll(type="High",
 
 #Figure S10 ----
 #all pvalues of hypergeometric test CAI
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure S10 \n",
     "###########################\n")
 
@@ -253,7 +253,7 @@ qt1<-plotEnrDeplAll(type="High",
 
 #Figure S11 ----
 #test all range of Top ranked mutations for CAI
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure S11 \n",
     "###########################\n")
 
@@ -277,7 +277,7 @@ plotEnrRankRange(type="High",
 
 #Figure S12 ----
 #test all range of Top ranked mutations for TAI
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure S12 \n",
     "###########################\n")
 
@@ -301,7 +301,7 @@ plotEnrRankRange(type="High",
 
 #Figure S13 ----
 #test all range of Top ranked mutations for TAI
-cat("###########################\n",
+cat(sep="","###########################\n",
     "Figure S13 \n",
     "###########################\n")
 
@@ -324,60 +324,60 @@ plotEnrTopRange(type="High",
 
 #Info ----
 #Other information functions
-cat("###########################\n",
+cat(sep="","\n###########################\n",
     "#     Umbalanced MutT     #\n",
     "###########################\n")
 unbalancedMutT(top=86,
                workdir)
 
-cat("###########################\n",
+cat(sep="","\n###########################\n",
     "#   Enrichment of zeros   #\n",
     "###########################\n")
 enrichZeros(quant=5,
             population = "High",
             Dw = "Cai",
             workdir )
-  
 
-cat("###########################\n",
+
+cat(sep="","\n###########################\n",
     "# Transition/Transversion #\n",
     "###########################\n")
 countTsTv(population = "High")
 
-cat("###########################\n")
-    listZeros(save = F,
+cat(sep="","\n##########################################\n")
+listZeros(save = F,
           workdir = workdir,
           top = 86)
-cat("###########################\n")
+cat(sep="","\n##########################################\n")
 countPossibleTsTv(workdir)
 
-cat("###########################\n")
+cat(sep="","\n##########################################\n")
 analiseZeros(population = "HighLow",
              Dw = "Cai")
-cat("###########################\n")
+cat(sep="","\n##########################################\n")
 analiseZeros(population = "High",
              Dw = "Cai",top = 86)
-cat("###########################\n")
+cat(sep="","\n##########################################\n")
 analiseZeros(population = "MutT",
              Dw = "Cai",top = 86)
-cat("###########################\n")
+cat(sep="","\n##########################################\n")
 analiseZeros(population = "Low",
              Dw = "Cai",top = 86)
-cat("###########################\n")
+cat(sep="","\n##########################################\n")
 analiseZeros(population = "High",
              Dw = "Tai")
-cat("###########################\n")
+cat(sep="","\n##########################################\n")
 analiseZeros(population = "MutT",
              Dw = "Tai")
-cat("###########################\n")
+cat(sep="","\n##########################################\n")
 analiseZeros(population = "Low",
              Dw = "Tai")
 
-cat("###########################\n")
+cat(sep="","\n##########################################\n")
 corrMCxDw(Dw = "Tai", save = F, type = "point",quant = 5,
           workdir = workdir)
 
-cat("###########################\n")
+cat(sep="","\n##########################################\n")
 listGenes(top = 86,
           workdir = workdir)
 
@@ -447,7 +447,7 @@ listGenes(top = 86,
 
 
 
-cat("###########################\n")
+cat(sep="","\n##########################################\n")
 totalCodons(top=86,
             workdir = workdir)
 
