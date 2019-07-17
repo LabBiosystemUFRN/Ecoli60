@@ -8,13 +8,12 @@ REL606CdsFasta.txt was generated from gene list using *createtRNAList.sh*
      
 tRNA AI reference: Reis2004, Solving the riddle of codon usage preferences: a test for translational selection
 
-All intermediate files was keeped here.
+All intermediate files were kept here.
 
-output_wi_fileMax.txt contains result for max hillclimbing interaction.
+output_wi_fileMax.txt contains the result for max hillclimbing interaction.
 
-output_wi_fileMin.txt  contains result for only one hillclimbing interaction
+output_wi_fileMin.txt contains the result for only one hillclimbing interaction
 
+svaluesMax.txt contains the S-values used to calculate wTai for the maximum number of interactions.
 
-svaluesMax.txt contains the S-values used to calculate wTai for max number of interactions.
-
-svaluesMax.txt contains the S-values used to calculate wTai for only one interactions.
+svaluesMax.txt contains the S-values used to calculate wTai for only one interaction.
