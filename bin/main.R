@@ -7,7 +7,10 @@
 #inicio ----
 rm(list = ls())
 
-baseDir="/home/clovis/Dropbox/Ecoli60/"
+args = commandArgs(trailingOnly=TRUE)
+
+baseDir=args[1]
+#baseDir="/home/clovis/temp/teste/Ecoli60/"
 #baseDir="/home/clovis/Doutorado/Projetos/Ecoli60/"
 
 binDir=paste0(baseDir,"bin/")
@@ -17,7 +20,12 @@ setwd(workdir)
 setwd(binDir)
 source(paste0(binDir,"allFunctions.R"))
 
+#create dWTai table
 calcDWTAI(type = "Max",workdir = workdir)
+#create a table with all High and Low mutations
+joinHighLow(workdir = workdir)
+#Create a MutT list
+mutationsMutT(workdir = workdir)
 
 #Figure 01 ----
 #Number of mutation per population & type
@@ -58,7 +66,8 @@ timeline(normalize = T,
          type = "bar",
          TsTv = "all",
          fix = T,
-         save = T)
+         save = T,
+         workdir = workdir)
 if (file.exists("FigS01.pdf")) 
   #Delete file if it exists
   file.remove("FigS01.pdf")
@@ -238,218 +247,132 @@ plotEnrTopRange(type="High",
                 figName = "FigS13",
                 workdir = workdir)
 
-
-
-
-
-
-
-timeline(file="AuxFiles/bSumHigh.csv",
-         normalize = T, 
-         type = "box",
-         save = T, #save option is not working here
-         normType = "perK",
-         mutT = 0,
-         workdir = workdir)
-
-
-
-
-
+#Info ----
+#Other information functions
+cat("###########################\n",
+    "#     Umbalanced MutT     #\n",
+    "###########################\n")
 unbalancedMutT(top=86,
                workdir)
 
+cat("###########################\n",
+    "#   Enrichment of zeros   #\n",
+    "###########################\n")
+enrichZeros(quant=5,
+            population = "High",
+            Dw = "Cai",
+            workdir )
+  
 
-enrichZeros()
-
-
+cat("###########################\n",
+    "# Transition/Transversion #\n",
+    "###########################\n")
 countTsTv(population = "High")
 
-analiseZeros(population = "HighLow",
-             Dw = "Cai")
-
-#createMonteCarloDF()
-listZeros(save = F,
+cat("###########################\n")
+    listZeros(save = F,
           workdir = workdir,
           top = 86)
-
+cat("###########################\n")
 countPossibleTsTv(workdir)
 
+cat("###########################\n")
+analiseZeros(population = "HighLow",
+             Dw = "Cai")
+cat("###########################\n")
 analiseZeros(population = "High",
              Dw = "Cai",top = 86)
+cat("###########################\n")
 analiseZeros(population = "MutT",
              Dw = "Cai",top = 86)
+cat("###########################\n")
 analiseZeros(population = "Low",
              Dw = "Cai",top = 86)
+cat("###########################\n")
 analiseZeros(population = "High",
              Dw = "Tai")
+cat("###########################\n")
 analiseZeros(population = "MutT",
              Dw = "Tai")
+cat("###########################\n")
 analiseZeros(population = "Low",
              Dw = "Tai")
 
-
+cat("###########################\n")
 corrMCxDw(Dw = "Tai", save = F, type = "point",quant = 5,
           workdir = workdir)
 
-
-
-calcDWTAI(type = "Min",workdir = workdir)
-
-source(paste0(binDir,"allFunctions.R"))
-
-plotEnrRankRange(type="High",
-                pval=0.001,
-                quant=5, 
-                normalize = T, 
-                normBy = "count",  
-                rankRange=c(50,1500,100),
-                fix = T,
-                TsTv = "Ts",
-                title = T,
-                Dw = "Tai",
-                top = 86,
-                save=F,
-                figName = "FigSXTaiTs",
-                workdir = workdir)
-
-source(paste0(binDir,"allFunctions.R"))
-
-rankRange=c(50,1500,50)
-top = 86
-type="High"
-pval=0.001
-quant=5
-normalize = T
-normBy = "count"
-rank=200
-fix = T
-TsTv = "Ts"
-title = T
-Dw = "Cai"
-topRange = c(20,1500,100)
-save=F
-figName = "FigS2XCaiTs2"
-workdir = workdir
-
-source(paste0(binDir,"allFunctions.R"))
-
-
+cat("###########################\n")
 listGenes(top = 86,
           workdir = workdir)
 
 
-#depletion Tai just Ts High
-plotEnrDeplPVal(type="High",
-                pval=0.001,
-                quant=5, 
-                normalize = T, 
-                normBy = "count",
-                rank=200,
-                fix = T,
-                TsTv = "Ts",
-                title = T,
-                Dw = "Tai",
-                top = 86,
-                save=F,
-                figName = "FigS08",
-                workdir = workdir)
-
-#depletion Cai just Ts High
-plotEnrDeplPVal(type="High",
-                pval=0.001,
-                quant=5, 
-                normalize = T, 
-                normBy = "count",
-                rank=200,
-                fix = T,
-                TsTv = "Ts",
-                title = T,
-                Dw = "Cai",
-                top = 86,
-                save=T,
-                figName = "FigS09",
-                workdir = workdir)
-#depletion Tai MutT
-plotEnrDeplPVal(type="MutT",
-                pval=0.001,
-                quant=5, 
-                normalize = T, 
-                normBy = "count",
-                rank=200,
-                fix = T,
-                TsTv = "all",
-                title = T,
-                Dw = "Tai",
-                top = 86,
-                save=T,
-                figName = "FigS10",
-                workdir = workdir)
-
-#depletion Cai MutT
-plotEnrDeplPVal(type="MutT",
-                pval=0.001,
-                quant=5, 
-                normalize = T, 
-                normBy = "count",
-                rank=200,
-                fix = T,
-                TsTv = "all",
-                title = T,
-                Dw = "Cai",
-                top = 86,
-                save=T,
-                figName = "FigS11",
-                workdir = workdir)
-
-
-
-totalCodons(workdir = workdir)
-
-plotCorrCaiOld(workdir=workdir,
-         save = F)
-
-correlation()
-
-corrTaiCai(save = T,figName = "corrTaiCai")
-
-
-nada<-plotEnrDeplPVal(type="High",
-                pval=0.001,
-                quant=5, 
-                normalize = T, 
-                normBy = "count",
-                rank=100,
-                fix = T,
-                TsTv = "Ts",
-                title = T,
-                Dw = "Tai",
-                save=F,
-                workdir = workdir)
+# #depletion Tai just Ts High
+# plotEnrDeplPVal(type="High",
+#                 pval=0.001,
+#                 quant=5, 
+#                 normalize = T, 
+#                 normBy = "count",
+#                 rank=200,
+#                 fix = T,
+#                 TsTv = "Ts",
+#                 title = T,
+#                 Dw = "Tai",
+#                 top = 86,
+#                 save=F,
+#                 figName = "FigS08",
+#                 workdir = workdir)
+# 
+# #depletion Cai just Ts High
+# plotEnrDeplPVal(type="High",
+#                 pval=0.001,
+#                 quant=5, 
+#                 normalize = T, 
+#                 normBy = "count",
+#                 rank=200,
+#                 fix = T,
+#                 TsTv = "Ts",
+#                 title = T,
+#                 Dw = "Cai",
+#                 top = 86,
+#                 save=T,
+#                 figName = "FigS09",
+#                 workdir = workdir)
+# #depletion Tai MutT
+# plotEnrDeplPVal(type="MutT",
+#                 pval=0.001,
+#                 quant=5, 
+#                 normalize = T, 
+#                 normBy = "count",
+#                 rank=200,
+#                 fix = T,
+#                 TsTv = "all",
+#                 title = T,
+#                 Dw = "Tai",
+#                 top = 86,
+#                 save=T,
+#                 figName = "FigS10",
+#                 workdir = workdir)
+# 
+# #depletion Cai MutT
+# plotEnrDeplPVal(type="MutT",
+#                 pval=0.001,
+#                 quant=5, 
+#                 normalize = T, 
+#                 normBy = "count",
+#                 rank=200,
+#                 fix = T,
+#                 TsTv = "all",
+#                 title = T,
+#                 Dw = "Cai",
+#                 top = 86,
+#                 save=T,
+#                 figName = "FigS11",
+#                 workdir = workdir)
 
 
 
-tRNA<-read.table("/home/clovis/Dropbox/Ecoli60/data_files/TAIFiles/REL606tRNA.txt",
-           sep="\t",
-           header = T,
-           stringsAsFactors = F)
-TsTv<-read.csv("AuxFiles/TsTv.csv",
-                     header = T,
-                     stringsAsFactors = F)
-codons<-TsTv[!duplicated(TsTv$ref),c('amino',"ref")]
-aminos<-c("A","Ala","Alanine","R","Arg","Arginine","N","Asn","Asparagine","D","Asp","Aspartic acid","C","Cys","Cysteine","Q","Gln","Glutamine","E","Glu","Glutamic acid","G","Gly","Glycine","H","His","Histidine","I","Ile","Isoleucine","L","Leu","Leucine","K","Lys","Lysine","M","Met","Methionine","F","Phe","Phenylalanine","P","Pro","Proline","S","Ser","Serine","T","Thr","Threonine","W","Trp","Tryptophan","Y","Tyr","Tyrosine","V","Val","Valine","!","stp","Stop")
-aminos<-as.data.frame(t(matrix(aminos,nrow = 3,ncol = 21)),
-                      stringsAsFactors = F)
-colnames(aminos)<-c("amino","abrev","name")
-tRNA$codon<-apply(X=as.data.frame(tRNA$AntiCodonsList), 
-                  MARGIN = 1,
-                  convertToComplement)
-tRNA<-merge(tRNA,codons,by.x="codon",by.y="ref", all.x = T)
-tRNA$amino[tRNA$codon=="ATG"]<-"M"
-tRNA$amino[tRNA$codon=="TGG"]<-"W"
-tRNA$amino[tRNA$codon%in%c("TAA","TAG","TGA")]<-"!"
-tRNA[is.na(tRNA$amino),]
-tRNA<-merge(tRNA,aminos, by="amino")
-#tRNA$AntiCodonsList<-NULL
+cat("###########################\n")
+totalCodons(top=86,
+            workdir = workdir)
 
-write.csv(tRNA,file= "/home/clovis/Dropbox/Ecoli60/presentation/figuras/aux/tRNA.csv")

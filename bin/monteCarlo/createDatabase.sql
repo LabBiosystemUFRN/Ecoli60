@@ -1,3 +1,4 @@
+#Create and populate the Monte Carlo database - mySQL
 
 #drop table MonteCarloBaseTv;
 
@@ -7,7 +8,7 @@ create table MonteCarloBaseTv (simulation int, run int, position int, symbol var
                     nucMut varchar(1), allele varchar(4), strand varchar(7));
 
 #Load consolidated data
-load data local infile '/home/clovis/Doutorado/Projetos/Ecoli60/data_files/MonteCarlo/ecoli60Tv/allSyn.csv' 
+load data local infile '../../data_files/MonteCarlo/ecoli60Tv/allSyn.csv' 
     into table MonteCarloBaseTv
     FIELDS TERMINATED by ','
     LINES TERMINATED BY '\n';

@@ -5,6 +5,8 @@
 #SBATCH --mail-user=cfreis230@gmail.com
 #SBATCH --mail-type=ALL
 
+#This script start all Monte Carlo symulations
+
 
 module load softwares/python/2.7-anaconda-5.0.1
 

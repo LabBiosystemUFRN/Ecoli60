@@ -9,13 +9,15 @@
 
 rm(list = ls())
 
-baseDir="/home/clovis/Doutorado/Projetos/Ecoli60/"
+args = commandArgs(trailingOnly=TRUE)
+
+baseDir=args[1]
 
 dirIn = paste0(baseDir,"data_files/AuxFiles/")
 dirOut = paste0(baseDir,"data_files/base/")
 setwd(baseDir)
 
-deltaW<-read.csv(paste0(dirIn,"cDeltaW.csv"),
+deltaW<-read.csv(paste0(dirIn,"cDeltaW86.csv"),
                  header = T,
                  stringsAsFactors = F)
 codonUsage<-read.csv(paste0(dirIn,"dCodonUsage.csv"),

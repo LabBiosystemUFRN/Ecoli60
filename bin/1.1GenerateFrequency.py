@@ -5,8 +5,8 @@
 #
 ################################
 import os
-path="/home/clovis/Doutorado/Projetos/Ecoli60/bin/"
-os.chdir(path)
+#path="/home/clovis/Doutorado/Projetos/Ecoli60/bin/"
+#os.chdir(path)
 
 import pylab
 import numpy

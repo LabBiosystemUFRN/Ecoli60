@@ -232,9 +232,10 @@ joinHighLow<- function(workdir="/home/clovis/Dropbox/Ecoli60/data_files/"){
 }
 
 
-totalCodons<-function(workdir="/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"){
+totalCodons<-function(top=86,
+                      workdir){
   setwd(workdir)
-  deltaW<-read.csv("AuxFiles/cDeltaW.csv",
+  deltaW<-read.csv(paste0("AuxFiles/cDeltaW",top,".csv"),
                    header = T,
                    stringsAsFactors = F)
   
@@ -303,7 +304,9 @@ totalCodons<-function(workdir="/home/clovis/Doutorado/Projetos/Ecoli60/data_file
   }
 }
 
-mutationsMutT<-function(){
+mutationsMutT<-function(workdir){
+  setwd(workdir)
+  deltaW<-readDeltaW(86,workdir)
   # Cria arq com mutações MutT
   codons<- unique(deltaW$ref)
   codons<-data.frame(ref=codons[grep("A|T",codons)],stringsAsFactors = F)
@@ -327,7 +330,7 @@ mutationsMutT<-function(){
   
 }
 
-joinHighLow<- function(workdir="/home/clovis/Dropbox/Ecoli60/data_files/"){
+joinHighLow<- function(workdir){
   setwd(workdir)
   mutAllelAll<-read.csv(paste0("./base/aHighMutAllDW.csv"),
                         header = T,
@@ -338,6 +341,17 @@ joinHighLow<- function(workdir="/home/clovis/Dropbox/Ecoli60/data_files/"){
   all<-rbind(mutAllelAll,mutAllelAllL)
   write.csv(all,
             file = "./base/aHighLowMutAllDW.csv",
+            row.names = F)
+  
+  mutAllelAll<-read.csv(paste0("./base/aHighMutSynFreqDW.csv"),
+                         header = T,
+                         stringsAsFactors = F)
+  mutAllelAllL<-read.csv(paste0("./base/aLowMutSynFreqDW.csv"),
+                         header = T,
+                         stringsAsFactors = F)
+  all<-rbind(mutAllelAll,mutAllelAllL)
+  write.csv(all,
+            file = "./base/aHighLowMutSynFreqDW.csv",
             row.names = F)
 }
 
@@ -2117,7 +2131,7 @@ calcDWTAI<-function(type="Min",
                  sep="\t",
                  stringsAsFactors = F)
   colnames(tRNA)<-c("ref","w")
-  deltaW<-read.csv("AuxFiles/cDeltaW.csv",
+  deltaW<-read.csv("AuxFiles/cDeltaW86.csv",
                    header = T,
                    stringsAsFactors = F)
   deltaW$dw<-0
@@ -2446,7 +2460,7 @@ enrichZeros <- function(save = F,
                       quant=5,
                       population = "HighLow",
                       Dw = "Tai",
-                      workdir = "/home/clovis/Dropbox/Ecoli60/data_files/"){
+                      workdir ){
   rm(list = ls())
   save = F
   quant=5
@@ -2683,7 +2697,7 @@ analiseZeros<-function(save = F,
     dw<-data.frame(Positive=nrow(zPop[zPop$dw<0,]),
                    Negative=nrow(zPop[zPop$dw>=0,]),
                    Total = nrow(zPop))
-    cat("\n\nZeros from Population", population,"\nDeltas:\n")
+    cat("\n\nZeros from Population", population,"\nDeltas",Dw,":\n")
     print(dw, row.names = F)
     level<-as.data.frame(table(zPop[,c("level")]),
                          stringsAsFactors = F)
@@ -3970,3 +3984,4 @@ corrCUBtRNA<-function(workdir){
   codonUsage$amino[codonUsage$amino%in%tmp$amino[!tmp$amino%in%unique(tmp2[,1])]]
   
 }
+

@@ -1,6 +1,9 @@
 rm(list = ls())
 
-baseDir="/home/clovis/Dropbox/Ecoli60/"
+args = commandArgs(trailingOnly=TRUE)
+
+baseDir=args[1]
+#baseDir="/home/clovis/Dropbox/Ecoli60/"
 #source("/home/clovis/Doutorado/Projetos/Ecoli60/bin/allFunctions.R")
 source(paste0(baseDir,
               "bin/allFunctions.R"))
