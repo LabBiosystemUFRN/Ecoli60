@@ -10,7 +10,7 @@ source(paste0(baseDir,
 
 #nGenes = commandArgs(trailingOnly=TRUE)
 #nGenes = 1500
-expression<-genesExpression(baseDir)
+expression<-genesExpression(paste0(baseDir,"data_files/"))
 nGenes = nrow(expression)
 topExpressed<-expression$symbol[1:nGenes]
 cat("Using top",nGenes,"genes\n",
