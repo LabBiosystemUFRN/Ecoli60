@@ -2133,7 +2133,7 @@ corrTaiCai<- function(top=86,
            plot = g, 
            device = "pdf", 
            path = workdir,
-           scale = 0.6,
+           scale = 0.4,
            width = 16.610, height = 16.610, units = "in",
            dpi = 300)
   }
