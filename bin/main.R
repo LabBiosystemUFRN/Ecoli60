@@ -72,7 +72,7 @@ cat(sep="","###########################\n",
     "Figure 03  \n",
     "###########################\n")
 
-nada<-plotEnrDeplPVal(type="High",
+nada<-plotEnrDeplPVal(type="HighLow",
                       pval=0.001,
                       quant=5, 
                       normalize = T,
@@ -93,7 +93,7 @@ cat(sep="","###########################\n",
     "Figure 04 \n",
     "###########################\n")
 
-nada<-plotEnrDeplPVal(type="High",
+nada<-plotEnrDeplPVal(type="HighLow",
                       pval=0.001,
                       quant=5, 
                       normalize = T, 
@@ -137,7 +137,7 @@ cat(sep="","###########################\n",
 
 figFunc02(figName = "FigS02",
           separeTsTv = T,
-          workdir)
+          workdir = workdir)
 
 #Figure S03 ----
 #Frequencie of mutations per codon usage after normalization A to F
@@ -147,15 +147,15 @@ cat(sep="","###########################\n",
 figFunc03(figName = "FigS03Count",
           normBy="count",
           separeTsTv = T,
-          workdir)
+          workdir = workdir)
 figFunc03(figName = "FigS03CUB",
           normBy="CUB",
           separeTsTv = T,
-          workdir)
+          workdir = workdir)
 figFunc03(figName = "FigS03Mean",
           normBy="mean",
           separeTsTv = T,
-          workdir)
+          workdir = workdir)
 
 
 #Fig S04/S05 ----
@@ -336,13 +336,14 @@ cat(sep="","\n###########################\n",
 enrichZeros(quant=5,
             population = "High",
             Dw = "Cai",
-            workdir )
+            workdir = workdir)
 
 
 cat(sep="","\n###########################\n",
     "# Transition/Transversion #\n",
     "###########################\n")
-countTsTv(population = "High")
+countTsTv(population = "High",
+		workdir = workdir)
 
 cat(sep="","\n##########################################\n")
 listZeros(save = F,
@@ -353,25 +354,35 @@ countPossibleTsTv(workdir)
 
 cat(sep="","\n##########################################\n")
 analiseZeros(population = "HighLow",
-             Dw = "Cai")
+             Dw = "Cai",
+             workdir = workdir)
 cat(sep="","\n##########################################\n")
 analiseZeros(population = "High",
-             Dw = "Cai",top = 86)
+             Dw = "Cai",
+             top = 86,
+             workdir = workdir)
 cat(sep="","\n##########################################\n")
 analiseZeros(population = "MutT",
-             Dw = "Cai",top = 86)
+             Dw = "Cai",
+             top = 86,
+             workdir = workdir)
 cat(sep="","\n##########################################\n")
 analiseZeros(population = "Low",
-             Dw = "Cai",top = 86)
+             Dw = "Cai",
+             top = 86,
+             workdir = workdir)
 cat(sep="","\n##########################################\n")
 analiseZeros(population = "High",
-             Dw = "Tai")
+             Dw = "Tai",
+             workdir = workdir)
 cat(sep="","\n##########################################\n")
 analiseZeros(population = "MutT",
-             Dw = "Tai")
+             Dw = "Tai",
+             workdir = workdir)
 cat(sep="","\n##########################################\n")
 analiseZeros(population = "Low",
-             Dw = "Tai")
+             Dw = "Tai",
+             workdir = workdir)
 
 cat(sep="","\n##########################################\n")
 corrMCxDw(Dw = "Tai", save = F, type = "point",quant = 5,

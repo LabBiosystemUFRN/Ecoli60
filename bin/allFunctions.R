@@ -1,7 +1,7 @@
 # !diagnostics off
 library(dplyr)
 calcDwOld<-function(top=86,
-                    workdir="/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"){
+                    workdir){
   setwd(workdir)
   deltaW<-readDeltaW(top,workdir)
   deltaW$dw<-NA
@@ -47,7 +47,7 @@ calcDwOld<-function(top=86,
 
 plotCorrCaiOld<- function(top=86,
                     save=F,
-                    workdir="/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"){
+                    workdir){
   cat("Using",workdir)
   #setwd(workdir)
   deltaW<-readDeltaW(top,workdir)
@@ -89,10 +89,8 @@ library(ggplot2)
            plot = g, 
            device = "pdf", 
            path = workdir,
-           scale = 1.5,
-           #width = 3*maxX, 
-           #height = 3*maxY, 
-           #units = "in",
+           scale = 0.6,
+           width = 16.610, height = 7.440, units = "in",
            dpi = 300)
   }
   
@@ -106,7 +104,7 @@ mutPersist<- function(top=86,
                   normalize = F, 
                   rank=100, 
                   tail="L",
-                  workdir="/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"){
+                  workdir){
   if(tail%in%c("L","H")){
     tail<- (tail == "L")
   }else{
@@ -217,7 +215,7 @@ mutPersist<- function(top=86,
 }
 
 
-joinHighLow<- function(workdir="/home/clovis/Dropbox/Ecoli60/data_files/"){
+joinHighLow<- function(workdir){
   mutAllelAll<-read.csv(paste0("./base/aHighMutAllDW.csv"),
                         header = T,
                         stringsAsFactors = F)
@@ -228,7 +226,7 @@ joinHighLow<- function(workdir="/home/clovis/Dropbox/Ecoli60/data_files/"){
   write.csv(all,
             file = "./base/aHighLowMutAllDW.csv",
             row.names = F,
-            workdir="/home/clovis/Doutorado/Projetos/Ecoli60/data_files/")
+            workdir=workdir)
 }
 
 
@@ -367,25 +365,8 @@ enrich<- function(type="High",
                   Dw = "Cai",
                   top = 86,
                   quiet=T,
-                  workdir = "/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"){
+                  workdir ){
   library(dplyr)
-  teste=F
-  if(teste){  
-    #rm(list = ls())
-    type="High"
-    pval=0.001
-    quant=5
-    normalize = T
-    normBy = "mean"
-    rank=200
-    tail="L"
-    fix= T
-    TsTv = "Ts"
-    Dw = "Cai"
-    top = 86
-    quiet=F
-    workdir = "/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"
-  }
   
   if(tail%in%c("L","H")){
     tail<- (tail == "L")
@@ -659,24 +640,7 @@ plotEnrDeplPVal<-function(type="High",
                           Dw = "Tai",
                           top=100,
                           figName = '',
-                          workdir = "/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"){
-  if(F){
-    
-    type="High"
-    pval=0.001
-    quant=5 
-    normalize = T 
-    normBy = "count"
-    rank=200
-    fix = T
-    TsTv = "Ts"
-    title = T
-    save=F
-    Dw = "Cai"
-    top=86
-    figName = ''
-    workdir = "/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"
-  }
+                          workdir ){
   library(gridExtra)
   library(grid)
   library(ggplot2)
@@ -938,8 +902,8 @@ plotEnrDeplPVal<-function(type="High",
            plot = g, 
            device = "pdf", 
            path = workdir,
-           scale = 1.5, 
-           #width = 6.72, height = 2.98, units = "in",
+           scale = 0.6, 
+           width = 16.610, height = 7.440, units = "in",
            dpi = 300)
   }
   
@@ -962,24 +926,7 @@ plotEnrDeplAll<-function(type="High",
                           Dw = "Cai",
                           top=200,
                           figName = '',
-                          workdir = "/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"){
-  if(F){
-    
-    type="High"
-    pval=0.001
-    quant=5 
-    normalize = T 
-    normBy = "count"
-    rank=200
-    fix = T
-    TsTv = "Ts"
-    title = T
-    save=F
-    Dw = "Tai"
-    top=86
-    figName = ''
-    workdir = "/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"
-  }
+                          workdir ){
   library(reshape2)
   library(ggplot2)
   library(dplyr)
@@ -1214,22 +1161,8 @@ timeline<-function(population="High",
                    mutT = 0,
                    operation = "sum",
                    TsTv = "Ts",
-                   workdir = "/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"){
-  if(F){
-    #rm(list = ls())
-    population="High"
-    normalize = T
-    normBy = "mean"
-    type = "line"
-    save = F
-    normType = "perK"
-    mutT = 0
-    operation = "sum"
-    fix=T
-    TsTv = "Ts"
-    workdir = "/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"
-  }
-  dirFig<-"/home/clovis/Doutorado/Projetos/Ecoli60/figures"
+                   workdir ){
+  dirFig<-"../figures"
   if(!operation %in% c("mean","sum")){
     stop('Parameter "operation" must be "mean" or "sum"' )
   }
@@ -1473,8 +1406,8 @@ timeline<-function(population="High",
            plot = g, 
            device = "pdf", 
            path = workdir,
-           scale = 1.5, 
-           #width = 6.72, height = 2.98, units = "in",
+           scale = 0.6, 
+           width = 16.610, height = 7.440, units = "in",
            dpi = 300)
   }
   
@@ -1486,19 +1419,10 @@ correlation <- function(population="HighLow",
                       save = F,
                       normalize = F,
                       normBy = "count",
-                      workdir = "/home/clovis/Dropbox/Ecoli60/data_files/",
+                      workdir ,
                       type = "sum",
                       TsTv="all"){
-  if(F){
-    population="High"
-    save = F
-    normalize = T
-    normBy = "mean"
-    workdir = "/home/clovis/Dropbox/Ecoli60/data_files/"
-    type = "sum"
-    TsTv="all"
-  }
-  
+
   if(!type %in% c("mean","sum")){
     stop('Parameter "type" must be "mean" or "sum"' )
   }
@@ -1647,8 +1571,8 @@ correlation <- function(population="HighLow",
            plot = g, 
            device = "pdf", 
            path = workdir,
-           scale = 1.5, 
-           #width = 6.72, height = 2.98, units = "in",
+           scale = 0.6, 
+           width = 16.610, height = 7.440, units = "in",
            dpi = 300)
   }
   return(g)
@@ -1657,7 +1581,7 @@ correlation <- function(population="HighLow",
 
 freqPerDw <- function(population="High",
                       save = F,
-                      workdir = "/home/clovis/Dropbox/Ecoli60/data_files/",
+                      workdir ,
                       type = "sum",
                       Dw = "Tai",
                       TsTv="all",
@@ -1862,19 +1786,18 @@ freqPerDw <- function(population="High",
            plot = g, 
            device = "pdf", 
            path = workdir,
-           scale = 1.5, 
-           #width = 6.72, height = 2.98, units = "in",
+           scale = 0.6, 
+           width = 16.610, height = 7.440, units = "in",
            dpi = 300)
   }
   return(g2)
 }
 
-genesExpression<-function(baseDir="/home/clovis/Doutorado/Projetos/Ecoli60/" ){
+genesExpression<-function(workdir){
   
-  workdir = paste0(baseDir,"data_files/dataExpresion/LeGac2012/")
   
   setwd(workdir)
-  
+  setwd("./dataExpresion/LeGac2012/")
   
   
   #If is not avaliable, install ecoli2.db
@@ -1942,8 +1865,9 @@ genesExpression<-function(baseDir="/home/clovis/Doutorado/Projetos/Ecoli60/" ){
 
 findFirstTop<-function(population="HighLow",
                        justSyn = T,
-                       workdir = "/home/clovis/Dropbox/Ecoli60/data_files/"){
-  source("/home/clovis/Doutorado/Projetos/Ecoli60/bin/allFunctions.R")
+                       workdir ){
+  setwd(workdir)
+  source("../bin/allFunctions.R")
   mutAllelAll<-read.csv(paste0("base/a",population,"MutAllDW.csv"),
                         header = T,
                         stringsAsFactors = F)
@@ -1951,7 +1875,7 @@ findFirstTop<-function(population="HighLow",
   if(justSyn){
     mutAllelAll<-mutAllelAll[mutAllelAll$Annotation == "synonymous",]
   }
-  expression<-genesExpression()
+  expression<-genesExpression(workdir)
   mutGenes<-unique(mutAllelAll$Gene)
   i=788
   for(i in 1:nrow(expression)){
@@ -1969,7 +1893,7 @@ listZeros <- function(save = F,
                       Dw = "Cai",
                       top=86,
                       withLow = F,
-                      workdir = "/home/clovis/Dropbox/Ecoli60/data_files/"){
+                      workdir ){
   
   setwd(workdir)
   if(Dw == "Tai"){
@@ -2128,7 +2052,7 @@ convertToComplement<-function(x){
 }
 
 calcDWTAI<-function(type="Min",
-                    workdir="/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"){
+                    workdir){
   setwd(workdir)
   tRNA<-read.table(paste0("TAIFiles/output_wi_file",type,".txt"),
                  header = T,
@@ -2160,7 +2084,7 @@ calcDWTAI<-function(type="Min",
 corrTaiCai<- function(top=86,
                       save = F,
                       figName,
-                      workdir="/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"){
+                      workdir){
   setwd(workdir)
   deltaWCAI<-readDeltaW(top,workdir)
   deltaWTAI<-read.csv("AuxFiles/cDeltaWTAI.csv",
@@ -2209,10 +2133,8 @@ corrTaiCai<- function(top=86,
            plot = g, 
            device = "pdf", 
            path = workdir,
-           scale = 1.5,
-           #width = 3*maxX, 
-           #height = 3*maxY, 
-           #units = "in",
+           scale = 0.6,
+           width = 16.610, height = 7.440, units = "in",
            dpi = 300)
   }
 }
@@ -2276,8 +2198,9 @@ get.ws <- function(tRNA,  # tRNA gene copy number
   return(tRNA)
 }
 
-totalize_tRNA<-function(baseDir="/home/clovis/Doutorado/Projetos/Ecoli60/data_files/TAIFiles/"){
-  setwd(baseDir)
+totalize_tRNA<-function(workdir){
+  setwd(workdir)
+  setwd("./TAIFiles/")
   codons<-data.frame(codon=c("TTT","TTC","TTA","TTG","TCT","TCC",
                              "TCA","TCG","TAT","TAC","TAA","TAG",
                              "TGT","TGC","TGA","TGG","CTT","CTC",
@@ -2315,7 +2238,7 @@ totalize_tRNA<-function(baseDir="/home/clovis/Doutorado/Projetos/Ecoli60/data_fi
 
 
 
-createMonteCarloDF<-function(workdir = "/home/clovis/Dropbox/Ecoli60/data_files/"){
+createMonteCarloDF<-function(workdir ){
   setwd(workdir)
   
   #load MySQL Lib
@@ -2363,7 +2286,7 @@ corrMCxDw<- function(Dw = "Tai",
                      type="box",
                      quant=5,
                      save=F,
-                     workdir = "/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"){
+                     workdir){
   library(ggplot2)
   if(!type %in% c("box","point")){
     stop('Parameter "type" must be "point" or "box"')
@@ -2375,7 +2298,7 @@ corrMCxDw<- function(Dw = "Tai",
                      header = T,
                      stringsAsFactors = F)
   }else if(Dw == "Cai"){
-    deltaW<-read.csv("./AuxFiles/cDeltaW.csv",
+    deltaW<-read.csv("./AuxFiles/cDeltaW86.csv",
                      header = T,
                      stringsAsFactors = F)
   }else{
@@ -2452,10 +2375,8 @@ corrMCxDw<- function(Dw = "Tai",
            plot = g, 
            device = "pdf", 
            path = workdir,
-           scale = 1.5,
-           #width = 3*maxX, 
-           #height = 3*maxY, 
-           #units = "in",
+           scale = 0.6,
+           width = 16.610, height = 7.440, units = "in",
            dpi = 300)
   }
 }
@@ -2465,19 +2386,13 @@ enrichZeros <- function(save = F,
                       population = "HighLow",
                       Dw = "Tai",
                       workdir ){
-  rm(list = ls())
-  save = F
-  quant=5
-  population = "HighLow"
-  Dw = "Tai"
-  workdir = "/home/clovis/Dropbox/Ecoli60/data_files/"
   setwd(workdir)
   if(Dw == "Tai"){
     deltaW<-read.csv("./AuxFiles/cDeltaWTAI.csv",
                      header = T,
                      stringsAsFactors = F)
   }else if(Dw == "Cai"){
-    deltaW<-read.csv("./AuxFiles/cDeltaW.csv",
+    deltaW<-read.csv("./AuxFiles/cDeltaW86.csv",
                      header = T,
                      stringsAsFactors = F)
   }else{
@@ -2670,7 +2585,7 @@ analiseZeros<-function(save = F,
                        population="High",
                        Dw = "Tai",
                        top=86,
-                       workdir = "/home/clovis/Dropbox/Ecoli60/data_files/"){
+                       workdir ){
   setwd(workdir)
   # if(!file.exists("AuxFiles/zeros.csv")){
   #   stop("File TsTv.csv do not exist.
@@ -2686,7 +2601,8 @@ analiseZeros<-function(save = F,
                    quant=5,
                    Dw=Dw,
                    top=top,
-                   withLow = T)
+                   withLow = T,
+                   workdir = workdir)
   TsTv<-read.csv("AuxFiles/TsTv.csv",
                  header = T,
                  stringsAsFactors = F)
@@ -2727,7 +2643,7 @@ countTsTv <- function(save = F,
                       Dw = "Tai",
                       type = "sum",
                       population = "HighLow",
-                      workdir = "/home/clovis/Dropbox/Ecoli60/data_files/"){
+                      workdir ){
   
   setwd(workdir)
   if(Dw == "Tai"){
@@ -2735,7 +2651,7 @@ countTsTv <- function(save = F,
                      header = T,
                      stringsAsFactors = F)
   }else if(Dw == "Cai"){
-    deltaW<-read.csv("./AuxFiles/cDeltaW.csv",
+    deltaW<-read.csv("./AuxFiles/cDeltaW86.csv",
                      header = T,
                      stringsAsFactors = F)
   }else{
@@ -2797,7 +2713,7 @@ countTsTv <- function(save = F,
 }
 
 readDeltaW<-function(top=10,
-                     workdir = "/home/clovis/Dropbox/Ecoli60/data_files/"){
+                     workdir ){
   
     setwd(workdir)
     #treat top parameter
@@ -2826,7 +2742,7 @@ readDeltaW<-function(top=10,
 
 compareGroups<-function(figName,
                              save = F,
-                             workdir= "/home/clovis/Dropbox/Ecoli60/data_files/"){
+                             workdir){
   setwd(workdir)
   population<-"High"
   
@@ -2873,10 +2789,8 @@ compareGroups<-function(figName,
            plot = g, 
            device = "pdf", 
            path = workdir,
-           scale = 1.5,
-           #width = 3*maxX, 
-           #height = 3*maxY, 
-           #units = "in",
+           scale = 0.6,
+           width = 16.610, height = 7.440, units = "in",
            dpi = 300)
   }
   return(g)
@@ -2884,7 +2798,7 @@ compareGroups<-function(figName,
 
 comparePopulations<-function(figName,
                         save = F,
-                        workdir= "/home/clovis/Dropbox/Ecoli60/data_files/"){
+                        workdir){
   setwd(workdir)
   population<-"High"
   
@@ -2949,27 +2863,24 @@ comparePopulations<-function(figName,
            plot = g, 
            device = "pdf", 
            path = workdir,
-           scale = 1.5,
-           #width = 3*maxX, 
-           #height = 3*maxY, 
-           #units = "in",
+           scale = 0.6,
+           width = 16.610, height = 7.440, units = "in",
            dpi = 300)
   }
   return(g)
 }
 
 figFunc01<-function(figName,
-                    workdir= "/home/clovis/Dropbox/Ecoli60/data_files/"){
+                    workdir){
+  setwd(workdir)
   g2<-compareGroups(save = F,
                    workdir= workdir)
   ggsave(filename = paste0("../figures/",figName,".pdf"), 
          plot = g2, 
          device = "pdf", 
          path = workdir,
-         scale = 1.5,
-         #width = 3*maxX, 
-         #height = 3*maxY, 
-         #units = "in",
+         scale = 0.6,
+         width = 16.610, height = 7.440, units = "in",
          dpi = 300)
   
 }
@@ -2977,7 +2888,8 @@ figFunc01<-function(figName,
 figFunc02<-function(figName,
                     normBy = "count",
                     separeTsTv = F,
-                    workdir= "/home/clovis/Dropbox/Ecoli60/data_files/"){
+                    workdir){
+  setwd(workdir)
   g<-list()
   index<-1
   if(separeTsTv){
@@ -3022,10 +2934,8 @@ figFunc02<-function(figName,
          plot = g2, 
          device = "pdf", 
          path = workdir,
-         scale = 2.5,
-         #width = 3*maxX, 
-         #height = 3*maxY, 
-         #units = "in",
+         #scale = 2.5,
+         width = 16.610, height = 7.440, units = "in",
          dpi = 300)
   
 }
@@ -3033,7 +2943,8 @@ figFunc02<-function(figName,
 figFunc03<-function(figName,
                     normBy = "count",
                     separeTsTv = F,
-                    workdir="/home/clovis/Dropbox/Ecoli60/data_files/"){  
+                    workdir){  
+  setwd(workdir)
   g<-list()
   index<-1
   if(separeTsTv){
@@ -3080,17 +2991,15 @@ figFunc03<-function(figName,
          plot = g2, 
          device = "pdf", 
          path = workdir,
-         scale = 2.5,
-         #width = 3*maxX, 
-         #height = 3*maxY, 
-         #units = "in",
+         #scale = 2.5,
+         width = 16.610, height = 7.440, units = "in",
          dpi = 300)
 }
 
 figFunc04<-function(figName,
                     type="box",
                     normBy = "count",
-                    workdir= "/home/clovis/Dropbox/Ecoli60/data_files/"){
+                    workdir){
   setwd(workdir)
   g<-list()
   index<-1
@@ -3137,10 +3046,8 @@ figFunc04<-function(figName,
          plot = g2, 
          device = "pdf", 
          path = workdir,
-         scale = 2.5,
-         #width = 3*maxX, 
-         #height = 3*maxY, 
-         #units = "in",
+         #scale = 2.5,
+         width = 16.610, height = 7.440, units = "in",
          dpi = 300)
   g2
 }
@@ -3148,7 +3055,7 @@ figFunc04<-function(figName,
 figFunc05<-function(figName,
                     normBy = "count",
                     type="box",
-                    workdir= "/home/clovis/Dropbox/Ecoli60/data_files/"){
+                    workdir){
   setwd(workdir)
   g<-list()
   index<-1
@@ -3182,10 +3089,8 @@ figFunc05<-function(figName,
          plot = g2, 
          device = "pdf", 
          path = workdir,
-         scale = 2.5,
-         #width = 3*maxX, 
-         #height = 3*maxY, 
-         #units = "in",
+         #scale = 2.5,
+         width = 16.610, height = 7.440, units = "in",
          dpi = 300)
   g2
   dev.off()
@@ -3194,7 +3099,7 @@ figFunc05<-function(figName,
 figFunc06<-function(figName,
                     Dw ,
                     normBy,
-                    workdir= "/home/clovis/Dropbox/Ecoli60/data_files/"){
+                    workdir){
   library(ggplot2)
   library(gridExtra)
   library(gridGraphics)
@@ -3226,10 +3131,8 @@ figFunc06<-function(figName,
          plot = g2, 
          device = "pdf", 
          path = workdir,
-         scale = 2.5,
-         #width = 3*maxX, 
-         #height = 3*maxY, 
-         #units = "in",
+         #scale = 2.5,
+         width = 16.610, height = 7.440, units = "in",
          dpi = 300)
 }
 
@@ -3333,7 +3236,7 @@ plotEnrTopRange<-function(type="High",
                           refLine=200,
                           smooth = F,
                           figName = 'teste',
-                          workdir = "/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"){
+                          workdir){
   library(gridExtra)
   library(grid)
   library(ggplot2)
@@ -3525,8 +3428,8 @@ plotEnrTopRange<-function(type="High",
            plot = g, 
            device = "pdf", 
            path = workdir,
-           scale = 1.5, 
-           #width = 6.72, height = 2.98, units = "in",
+           scale = 0.6, 
+           width = 16.610, height = 7.440, units = "in",
            dpi = 300)
   }
 }
@@ -3546,7 +3449,7 @@ plotEnrRankRange<-function(type="HighLow",
                           refLine=200,
                           smooth = F,
                           figName = '',
-                          workdir = "/home/clovis/Doutorado/Projetos/Ecoli60/data_files/"){
+                          workdir){
   library(gridExtra)
   library(grid)
   library(ggplot2)
@@ -3728,15 +3631,15 @@ plotEnrRankRange<-function(type="HighLow",
            plot = g, 
            device = "pdf", 
            path = workdir,
-           scale = 1.5, 
-           #width = 6.72, height = 2.98, units = "in",
+           scale = 0.6, 
+           width = 16.610, height = 7.440, units = "in",
            dpi = 300)
   }
 }
 
 plotExpression<-function(workdir = workdir){
   setwd(workdir)
-  expression<-genesExpression()
+  expression<-genesExpression(workdir)
   expression$x<-seq(1,nrow(expression),1)
   library(ggplot2)
   ggplot()+theme_bw()+
