@@ -2134,7 +2134,7 @@ corrTaiCai<- function(top=86,
            device = "pdf", 
            path = workdir,
            scale = 0.6,
-           width = 16.610, height = 7.440, units = "in",
+           width = 16.610, height = 16.610, units = "in",
            dpi = 300)
   }
 }
