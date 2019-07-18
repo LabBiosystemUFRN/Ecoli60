@@ -66,7 +66,7 @@ echo "Correctin TGC error"
 echo "######################################"
 Rscript   2.1CorrectTGCError.R $baseDir 
 
-#just delete some garbage
+#just to delete some garbage
 rm ${baseDir}"figures/supplemental_gene_parallelism_pvalue.pdf"
 
 # Our main pipeline script
