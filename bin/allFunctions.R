@@ -1809,12 +1809,12 @@ freqPerDw <- function(population="High",
     pHeight = 1
     plot.window(c(0,pWidth),
                 c(0,pHeight))
-    l<-legend(0, 1, legend=c(" Tv", " Ts"," Zeros","MutT"),
-              col=c("red", "darkmagenta","green","darkgoldenrod2"),
-              pch = c(20,18,2,8), 
-              cex=0.7,
-              box.lwd = 0)
-    leg <- recordPlot()
+    
+    leg <- legendGrob(c(" Tv", " Ts"," Zeros","MutT"), 
+                      pch=c(20,18,2,8),
+                      gp=gpar(col = c("red", "darkmagenta","green","darkgoldenrod2"),
+                              fill = "gray",
+                              cex=0.7))    
     
     
   }else{
@@ -1836,23 +1836,27 @@ freqPerDw <- function(population="High",
     pHeight = 1
     plot.window(c(0,pWidth),
                 c(0,pHeight))
-    l<-legend(0, 1, legend=c(" Tv", " Ts"," Zeros"),
-              col=c("red", "darkmagenta","green"),
-              pch = c(20,18,2), 
-              cex=0.7,
-              box.lwd = 0)
-    leg <- recordPlot()
     
+    leg <- legendGrob(c(" Tv", " Ts"," Zeros"), 
+                      pch=c(20,18,2),
+                      gp=gpar(col = c("red", "darkmagenta","green"),
+                               fill = "gray",
+                              cex=0.7))    
   }
   g<-g+geom_text(aes(y=(max(sumario$freq)*2/3), 
                      x=(min(deltaW$dw)), 
                      label = paste(nrow(zeros),"zeros"),
                      hjust = "left"))
-  g2<-plot_grid(g, NULL,leg,
-               nrow=1,
-               ncol = 3,
-               rel_widths=(c(9.5,0.5,1)))
-  print(g2)
+  
+  lay <- rbind(c(1,1,1,1,1,1,1,1,1,1,NA),
+               c(1,1,1,1,1,1,1,1,1,1,NA),
+               #c(1,1,1,1,1,1,1,1,1,1,3),
+               c(1,1,1,1,1,1,1,1,1,1,2),
+               c(1,1,1,1,1,1,1,1,1,1,2),
+               c(1,1,1,1,1,1,1,1,1,1,NA),
+               c(1,1,1,1,1,1,1,1,1,1,NA))
+  g2<-grid.arrange(g,leg, layout_matrix = lay)
+  
   if(save){
     ggsave(filename = paste0("../figures/MutPerDw",population,".pdf"), 
            plot = g, 
@@ -3192,12 +3196,14 @@ figFunc06<-function(figName,
                     normBy,
                     workdir= "/home/clovis/Dropbox/Ecoli60/data_files/"){
   library(ggplot2)
-  library(cowplot)
+  library(gridExtra)
+  library(gridGraphics)
   setwd(workdir)
   g<-list()
   index<-1
 
   for(pop in c("HighLow","High","Low", "MutT")){  
+    cat("Processing population:",pop,"\n")
   
     g[[index]]<-freqPerDw(population =  pop,
                           save =F, 
@@ -3208,10 +3214,13 @@ figFunc06<-function(figName,
                           workdir = workdir) 
       index<-index+1
   }
-  g2<-plot_grid(g[[1]],g[[2]],g[[3]],g[[4]],
-                labels=c('A', 'B', 'C', 'D'),
-                nrow=2,
-                ncol = 2)
+  lay <- rbind(c(1,2),
+               c(3,4))
+  
+  g2<-grid.arrange(grobs=g,
+                  layout_matrix = lay,
+                  newpage = F)
+  
   filename=paste0("../figures/",figName,".pdf")
   ggsave(filename = filename, 
          plot = g2, 
@@ -3222,7 +3231,6 @@ figFunc06<-function(figName,
          #height = 3*maxY, 
          #units = "in",
          dpi = 300)
-  g2
 }
 
 
