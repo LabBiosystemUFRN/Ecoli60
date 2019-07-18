@@ -2094,28 +2094,28 @@ corrTaiCai<- function(top=86,
   deltas<-merge(deltaWCAI,deltaWTAI,
                 by=c("ref","mut"))
   colnames(deltas)<-c("ref","mut","CAI","TAI")
-  lm<-lm(deltas$CAI~deltas$TAI)
-  corr<-cor.test(deltas$CAI,deltas$TAI)
-  maxX<-max(deltas$TAI)
-  maxY<-max(deltas$CAI)
+  lm<-lm(deltas$TAI~deltas$CAI)
+  corr<-cor.test(deltas$TAI,deltas$CAI)
+  maxX<-max(deltas$CAI)
+  maxY<-max(deltas$TAI)
   
-  tmp1<-data.frame(table(deltas$CAI))
-  tmp2<-data.frame(table(deltas$TAI))
-  cat("Repeated dwCAI:\n")
-  print(tmp1[tmp1$Freq!=1,])
+  tmp1<-data.frame(table(deltas$TAI))
+  tmp2<-data.frame(table(deltas$CAI))
   cat("Repeated dwTAI:\n")
+  print(tmp1[tmp1$Freq!=1,])
+  cat("Repeated dwCAI:\n")
   print(tmp2[tmp2$Freq!=1,])
-  cat("Distinct dwCAI:", length(unique(deltas$CAI)),
-      "\nDistinct dwTAI:", length(unique(deltas$TAI)),"\n")
-  cat("Max dwCAI:", min(deltas$CAI),"to",max(deltas$CAI),
-      "\nMax dwTAI:", min(deltas$TAI),"to",max(deltas$TAI),"\n")
+  cat("Distinct dwTAI:", length(unique(deltas$TAI)),
+      "\nDistinct dwCAI:", length(unique(deltas$CAI)),"\n")
+  cat("Max dwTAI:", min(deltas$TAI),"to",max(deltas$TAI),
+      "\nMax dwCAI:", min(deltas$CAI),"to",max(deltas$CAI),"\n")
   
   library(ggplot2)
   g<-ggplot()+theme_bw()+
-    xlab(bquote(Delta~"w TAI"))+
-    ylab(bquote(Delta~"w CAI"))+
+    xlab(bquote(Delta~"w CAI"))+
+    ylab(bquote(Delta~"w TAI"))+
     geom_point(data = deltas,
-               aes(x=TAI,y=CAI), 
+               aes(y=TAI,x=CAI), 
                col="red", 
                pch=1)+
     geom_abline(slope = lm$coefficients[2], 
@@ -2126,15 +2126,17 @@ corrTaiCai<- function(top=86,
                   label=paste("Correlation:",
                               round(corr$estimate,3),
                               "\npvalue:",
-                              format(corr$p.value,digits = 3, scientific=T))))
+                              format(corr$p.value,digits = 3, scientific=T))))+
+    scale_x_continuous(breaks = seq(-2,2,0.5),
+                       minor_breaks = seq(-2,2,0.25))
   print(g)
   if(save){
     ggsave(filename = paste0("../figures/",figName,".pdf"), 
            plot = g, 
            device = "pdf", 
            path = workdir,
-           scale = 0.4,
-           width = 16.610, height = 16.610, units = "in",
+           scale = 1,
+           width = 7, height = 4.75, units = "in",
            dpi = 300)
   }
 }
