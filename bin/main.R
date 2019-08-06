@@ -108,6 +108,90 @@ nada<-plotEnrDeplPVal(type="HighLow",
                       figName = "Fig04",
                       workdir = workdir)
 
+#Figure S19 ----
+#depletion Tai just High Ts
+cat(sep="","###########################\n",
+    "Figure S19  \n",
+    "###########################\n")
+
+nada<-plotEnrDeplPVal(type="High",
+                      pval=0.001,
+                      quant=5, 
+                      normalize = T,
+                      normBy = "mean",
+                      rank=200,
+                      fix = T,
+                      TsTv = "Ts",
+                      title = T,
+                      Dw = "Tai",
+                      top = 86,
+                      save=T,
+                      figName = "FigS19",
+                      workdir = workdir)
+
+#Figure S20 ----
+#depletion Cai just High Ts
+cat(sep="","###########################\n",
+    "Figure S20  \n",
+    "###########################\n")
+
+nada<-plotEnrDeplPVal(type="High",
+                      pval=0.001,
+                      quant=5, 
+                      normalize = T,
+                      normBy = "mean",
+                      rank=200,
+                      fix = T,
+                      TsTv = "Ts",
+                      title = T,
+                      Dw = "Cai",
+                      top = 86,
+                      save=T,
+                      figName = "FigS20",
+                      workdir = workdir)
+
+#Figure S21 ----
+#depletion Tai MutT
+cat(sep="","###########################\n",
+    "Figure S21  \n",
+    "###########################\n")
+
+nada<-plotEnrDeplPVal(type="MutT",
+                      pval=0.001,
+                      quant=5, 
+                      normalize = T,
+                      normBy = "mean",
+                      rank=200,
+                      fix = T,
+                      TsTv = "all",
+                      title = T,
+                      Dw = "Tai",
+                      top = 86,
+                      save=T,
+                      figName = "FigS21",
+                      workdir = workdir)
+
+#Figure S22 ----
+#depletion Cai MutT
+cat(sep="","###########################\n",
+    "Figure S22  \n",
+    "###########################\n")
+
+nada<-plotEnrDeplPVal(type="MutT",
+                      pval=0.001,
+                      quant=5, 
+                      normalize = T,
+                      normBy = "mean",
+                      rank=200,
+                      fix = T,
+                      TsTv = "all",
+                      title = T,
+                      Dw = "Cai",
+                      top = 86,
+                      save=T,
+                      figName = "FigS22",
+                      workdir = workdir)
+
 #Figure S01 ----
 #Distribution of Frequencies of mutations per codon usage
 # time line and boxplot for population HighLow
@@ -321,6 +405,16 @@ plotEnrTopRange(type="High",
                 save=T,
                 figName = "FigS13",
                 workdir = workdir)
+
+#Figure S14 ----
+#correlation of prefered codons and tRNA count
+cat(sep="","###########################\n",
+    "Figure S14 \n",
+    "###########################\n")
+corrCUBtRNA(workdir,
+            save=T,
+            figName="FigS14")
+
 
 #Info ----
 #Other information functions

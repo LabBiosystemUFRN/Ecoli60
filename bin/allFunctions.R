@@ -629,16 +629,16 @@ enrich<- function(type="High",
 
 plotEnrDeplPVal<-function(type="High",
                           pval=0.001,
-                          quant=7, 
-                          normalize = F, 
-                          normBy = "count",
-                          rank=100,
-                          fix = "all",
+                          quant=5, 
+                          normalize = T, 
+                          normBy = "mean",
+                          rank=200,
+                          fix = T,
                           TsTv = "all",
                           title = T,
                           save=F,
                           Dw = "Tai",
-                          top=100,
+                          top=200,
                           figName = '',
                           workdir ){
   library(gridExtra)
@@ -3801,10 +3801,16 @@ normalization<-function(data,
   return(qt)
 }
 
-corrCUBtRNA<-function(workdir){
+corrCUBtRNA<-function(workdir,
+                      save=F,
+                      figName="corrCUBtRNA"){
   setwd(workdir)
   # deltaW<-readDeltaW(top,workdir)
   # deltaW$dw<-NA
+  deltaW<-read.csv("./AuxFiles/cDeltaWTAI.csv",
+                   header = T,
+                   stringsAsFactors = F)
+  
   codonUsage<-read.csv("AuxFiles/dCodonUsage.csv",
                        header = T,
                        stringsAsFactors = F)
@@ -3849,6 +3855,7 @@ corrCUBtRNA<-function(workdir){
   codonUsage<-merge(codonUsage,tmp,by="amino")
   
   codonUsage$shape<-(factor(codonUsage$shape))
+  codonUsage$cores<-as.factor(codonUsage$amino)
   
   lm<-lm(codonUsage$tGCN~codonUsage$count)
   corr<-cor.test(codonUsage$tGCN,codonUsage$count)
@@ -3858,11 +3865,11 @@ corrCUBtRNA<-function(workdir){
   g<-ggplot()+theme_bw()+
     ylab("tRNA Count")+
     xlab("Codon Usage")+
-    geom_point(data = codonUsage,
-               aes(y=tGCN,x=count,
-                   color=cor,
-                   shape=shape))+ 
-    scale_color_manual(values = cor)+
+    geom_text(data = codonUsage,
+               aes(y=tGCN,x=count,label=amino,
+                   colour=cores),cex=5)+
+                   # shape=shape))+ 
+    scale_color_manual(guide=F, values = rainbow(20))+
                # col="red", 
                # pch=1)+
     geom_abline(slope = lm$coefficients[2], 
@@ -3877,9 +3884,69 @@ corrCUBtRNA<-function(workdir){
   
   g
   
+  tmp1<-codonUsage[,1:3]
+
+  amino="A"
+  count=0
+  for(amino in unique(tmp1$amino)){
+    tmp2<-tmp1[tmp1$amino==amino,]
+    tmp2<-tmp2[order(tmp2$count),]
+    tmp2$use<-paste0(rep("M",nrow(tmp2)),seq(1,nrow(tmp2),1))
+    if(count == 0){
+      tmp3<-tmp2
+      count =1
+    }else{
+      tmp3<-rbind(tmp3,tmp2)
+    }
+  }
+  codonUsage<-merge(codonUsage,tmp3[,c("ref","use")],by="ref")
+  codonUsage$use[codonUsage$count==codonUsage$max]<-"Preferred Codon"
+  codonUsage$use[codonUsage$count==codonUsage$min]<-"Less Preferred"
+  codonUsage$use<-as.factor(codonUsage$use)
+
+  pos <- position_jitter(width = 0.2, seed = 1)
+  g<-ggplot(data = codonUsage,
+            aes(x=amino,
+                y=tGCN,
+                
+                color=use, 
+                label=ref,
+                hjust="inward"))+theme_classic()+
+    ylab("tRNA Gene Count")+
+    xlab("Amino Acid")+
+    geom_tile(col="black",fill=alpha(colour = "white",alpha = 0))+
+    geom_point(position = pos)+
+    #geom_text(position = pos, cex=5)+
+    # scale_fill_gradient(guide=F,
+    #                     low = alpha(colour = "white",alpha = 0),
+    #                     high = alpha(colour = "white",alpha = 0))+
+    # scale_color_gradient2(name="Usage",
+    #                       low = ("red"), 
+    #                       mid = "grey",
+    #                       high = ("blue"), 
+    #                       midpoint = max(codonUsage$count)/2)+
+    scale_y_continuous(breaks=seq(0, 
+                                  max(codonUsage$tGCN), 
+                                  by = 1))+
+    scale_color_brewer(name="Usage",guide="legend",palette="RdBu")
+  # shape=shape))+ 
+    # col="red", 
+    # pch=1)+
+  if(save){
+    filename=paste0("../figures/",figName,".pdf")
+    ggsave(filename = filename, 
+         plot = g, 
+         device = "pdf", 
+         path = workdir,
+         #scale = 2.5,
+         width = 8, height = 4, units = "in",
+         dpi = 300)
+  }
+  
+  g
   
   cat("Zeros:\n")
-  tmp2<-t(apply(codonUsage[codonUsage$tGCN ==0,c(1,7,3,6)],
+  tmp2<-t(apply(codonUsage[codonUsage$tGCN ==0,c(2,7,3,6)],
         MARGIN = 1,
         FUN = function(x){
           if(x[2]==x[3]){
@@ -3891,10 +3958,41 @@ corrCUBtRNA<-function(workdir){
           }
           
         }))
-  table(tmp2[,2])
-  table(tmp2[,1])
-  nrow(codonUsage[codonUsage$tGCN ==0,])
-  codonUsage$amino[codonUsage$amino%in%tmp$amino[!tmp$amino%in%unique(tmp2[,1])]]
+  print(table(tmp2[,2]))
+  print(table(tmp2[,1]))
+  
+  cat("\nZeros in min:",tmp2[tmp2[,2]=="Min",1])
+  cat("\nZeros in max:",tmp2[tmp2[,2]=="Max",1])
+  cat("\nTotal:",nrow(codonUsage[codonUsage$tGCN ==0,]))
+  cat("\nNon Zeros:",unique(codonUsage$amino[codonUsage$amino%in%tmp$amino[!tmp$amino%in%unique(tmp2[,1])]]))
+  # 
+  # teste<-deltaW
+  # teste<-merge(deltaW,codonUsage[,c(1,2,5)], by="ref")
+  # colnames(teste)<-c("ref","mut","dw","amino","tRef" )
+  # teste<-merge(teste,codonUsage[,c(1,2,5)], by.x = "mut",by.y="ref")
+  # colnames(teste)<-c("mut","ref","dw","amino","tRef","tMut" )
+  # teste<-teste[,c("ref","mut","dw","amino","tRef","tMut" )]  
+  # table(teste[,c(5,6)])
+  # 
+  # library(scales)
+  # g<-ggplot()+theme_bw()+
+  #   ylab("tRNA count - Mutation")+
+  #   xlab("tRNA count - Reference")+
+  #   geom_tile(data = teste,
+  #             aes(y=tMut,x=tRef,fill=dw,color=dw))+
+  #   geom_jitter(data = teste,
+  #             aes(y=tMut,x=tRef,color=dw),
+  #             width = 0.4)+
+  #   scale_fill_gradient2(guide=F,low = alpha(colour = "white",alpha = 0),
+  #                        mid = alpha(colour = "white",alpha = 0),
+  #                       high = alpha(colour = "white",alpha = 0), midpoint = 0)+
+  #   scale_color_gradient2(low = ("red"), mid = "lightgrey",
+  #                      high = ("blue"), midpoint = 0)
+  # # shape=shape))+ 
+  # # col="red", 
+  # # pch=1)+
+  # 
+  # g
   
 }
 
