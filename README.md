@@ -19,7 +19,7 @@ Scripts needed to generate the Monte Carlo simulation can be found [here](https:
 
 ### Python dependencies
 
-python 2.7, 
+> python 2.7, 
     bz2, 
     itertools, 
     glob, 
@@ -33,8 +33,8 @@ python 2.7,
 
 ### R dependencies
 
-cowplot, doParallel, dplyr, ggplot2, grDevices, grid, gridExtra, gridGraphics, lattice, reshape2, RMySQL, scales, stats, stringr, BiocManager
+> cowplot, doParallel, dplyr, ggplot2, grDevices, grid, gridExtra, gridGraphics, lattice, reshape2, RMySQL, scales, stats, stringr, BiocManager
 
 ### R dependencies from Bioconductor
 
-ecoli2.db, org.EcK12.eg.db, ecoli2.db
+> ecoli2.db, org.EcK12.eg.db, ecoli2.db

@@ -14,7 +14,7 @@ Alternatively, you can run our pipeline using pre-processed sequencing files pro
 
 #### 0.1calculate_clade_hmm_wrapper.py \*
 
->Calculates the clade hmm wrapper (see the [original pipeline](https://github.com/benjaminhgood/LTEE-metagenomic) for details)
+> Calculates the clade hmm wrapper (see the [original pipeline](https://github.com/benjaminhgood/LTEE-metagenomic) for details)
 
 #### 0.2calculate_well_mixed_hmm_wrapper.py \*
 
