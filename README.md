@@ -1,5 +1,8 @@
-# Ecoli60
-## Synonymous mutations and neutral evolution in bacteria
+# <center> Ecoli60</center>
+## <center> Synonymous mutations and neutral evolution in bacteria</center>
+
+####  <span style="color:red">The code located here is provided "AS-IS", with no warranties, express or implied, and hereby disclaims all implied warranties, including any warranty of merchantability and warranty of fitness for a particular purpose. It's released under GPL v2.</span> </center>
+<br>
 
 This repository contains the files necessary to reproduce the results reported in our analysis of the role of synonymous in purifying selection. The *bin* folder contains the code used to generate analysis and figures. It's based on R software (version 3.5.1) and uses the libraries cowplot, doParallel, dplyr, ecoli2.db, ggplot2, grDevices, grid, gridExtra, gridGraphics, lattice, org.EcK12.eg.db, reshape2, RMySQL, scales, stats, and stringr.
 
