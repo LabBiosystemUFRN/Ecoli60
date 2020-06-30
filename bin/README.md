@@ -68,6 +68,8 @@ Alternatively, you can run our pipeline using pre-processed sequencing files pro
 >Run our main pipeline
 
 
+<br>
+
 <sup>\* Those scripts are adapted from the original pipeline and use our modified version of parse_file.py</sup>
 
 <sup>\*\* Modified from the original plot_full_trafic_plot_figure.py script</sup>
