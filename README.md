@@ -15,3 +15,26 @@ It will execute the final tasks of the original pipeline, generate other files n
 
 ### Monte Carlo simulation
 Scripts needed to generate the Monte Carlo simulation can be found [here](https://github.com/LabBiosystemUFRN/Ecoli60/tree/master/bin/monteCarlo/).
+
+
+### Python dependencies
+
+python 2.7, 
+    bz2, 
+    itertools, 
+    glob, 
+    math, 
+    matplotlib, 
+    numpy, 
+    os, 
+    pylab, 
+    scipy, 
+    sys.
+
+### R dependencies
+
+cowplot, doParallel, dplyr, ggplot2, grDevices, grid, gridExtra, gridGraphics, lattice, reshape2, RMySQL, scales, stats, stringr, BiocManager
+
+### R dependencies from Bioconductor
+
+ecoli2.db, org.EcK12.eg.db, ecoli2.db

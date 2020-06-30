@@ -3916,7 +3916,7 @@ corrCUBtRNA<-function(workdir,
     xlab("Amino Acid")+
     geom_tile(col="black",fill=alpha(colour = "white",alpha = 0))+
     geom_point(position = pos)+
-    #geom_text(position = pos, cex=5)+
+    geom_text(position = pos, cex=2)+
     # scale_fill_gradient(guide=F,
     #                     low = alpha(colour = "white",alpha = 0),
     #                     high = alpha(colour = "white",alpha = 0))+
